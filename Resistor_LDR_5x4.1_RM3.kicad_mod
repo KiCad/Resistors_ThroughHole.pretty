@@ -1,4 +1,4 @@
-(module Resistor_LDR_5x4.1_RM3.4 (layer F.Cu) (tedit 57EED201)
+(module Resistor_LDR_5x4.1_RM3 (layer F.Cu) (tedit 57EED201)
   (descr "Resistor, LDR 5x4.1mm")
   (tags "Resistor, LDR 5x4.1mm")
   (fp_text reference REF** (at 0 -2.9) (layer F.SilkS)
