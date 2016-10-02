@@ -324,7 +324,7 @@ if __name__ == '__main__':
     makeRES_SIMPLE(7.62,   7, 3.4, 1.7, 1.7, 1, "_Horizontal", "Resistor, Axial,  RM 7.62mm, 1/8W,", "Resistor Axial RM 7.62mm 1/8W", [0.5, 0, 0], [4, 4, 4 ], 0)
     makeRES_SIMPLE(10.16, 10, 6.5, 2.3, 2.3, 1, "_Horizontal", "Resistor, Axial,  RM 10.16mm, 1/4W,", "Resistor Axial RM 10.16mm 1/4W", [0.2, 0, 0], [0.4, 0.4, 0.4 ], 1)
     makeRES_SIMPLE(15, 15, 6.5, 2.3, 1.7, 1, "_Horizontal", "Resistor, Axial,  RM 15mm, 1/4W,", "Resistor Axial RM 15mm 1/4W", [0.295, 0, 0], [0.395, 0.4, 0.4 ], 1)
-    makeRES_SIMPLE(20, 20, 6.5, 2.3, 1.7, 1, "_Horizontal", "Resistor, Axial,  RM 20mm, 1/4W,", "Resistor Axial RM 20mm 1/4W", [0.395, 0, 0], [0.395, 0.4, 0.4 ], 1)
+    makeRES_SIMPLE(20, 20, 15, 5, 1.7, 1, "_Horizontal", "Resistor, Axial,  RM 20mm, 2W,", "Resistor Axial RM 20mm 2W", [0.395, 0, 0], [0.395, 0.4, 0.4 ], 1)
     makeRES_SIMPLE(25, 25, 17, 6, 1.7, 1, "_Horizontal", "Resistor, Axial,  RM 25mm, 3W,", "Resistor Axial RM 25mm 3W", [0.395, 0, 0], [0.395, 0.4, 0.4 ], 0)
     makeRES_SIMPLE(30, 30, 24, 8, 1.7, 1.2, "_Horizontal", "Resistor, Axial,  RM 30mm, 5W,", "Resistor Axial RM 30mm 5W", [0.395, 0, 0], [0.395, 0.4, 0.4 ], 0)
     makeRES_VERTRSIMPLE(5.08, 5, 15, 5, 5, 1, "_Vertical", "Resistor, Axial,  RM 5.08mm, 2W,", "Resistor Vertical RM 5.08mm 2W", [0.2, 0, 0], [0.4, 0.4, 0.4 ], 0)
