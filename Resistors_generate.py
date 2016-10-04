@@ -435,8 +435,9 @@ def makeRES_VERT(rm, rmdisp, rl, rw, rh, ddrill, material, R_POW, x_3d=[0,0,0], 
 
     # create SILKSCREEN-layer
     kicad_mod.append(RectLine(start=[l_slk, t_slk], end=[l_slk+w_slk, t_slk+h_slk], layer='F.SilkS'))
-    kicad_mod.append(Line(start=[xl1_slk, t_slk], end=[xl1_slk, t_slk+h_slk], layer='F.SilkS'))
-    kicad_mod.append(Line(start=[xl2_slk, t_slk], end=[xl2_slk, t_slk+h_slk], layer='F.SilkS'))
+    if (rw!=rh):
+        kicad_mod.append(Line(start=[xl1_slk, t_slk], end=[xl1_slk, t_slk+h_slk], layer='F.SilkS'))
+        kicad_mod.append(Line(start=[xl2_slk, t_slk], end=[xl2_slk, t_slk+h_slk], layer='F.SilkS'))
 
     # create courtyard
     kicad_mod.append(RectLine(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt+w_crt), roundCrt(t_crt+h_crt)], layer='F.CrtYd', width=lw_crt))
@@ -444,6 +445,105 @@ def makeRES_VERT(rm, rmdisp, rl, rw, rh, ddrill, material, R_POW, x_3d=[0,0,0], 
     # create pads
     kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[0, 0], size=[padx, pady], drill=ddrill, layers=['*.Cu', '*.Mask']))
     kicad_mod.append(Pad(number=2, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[rm, 0], size=[padx, pady], drill=ddrill, layers=['*.Cu', '*.Mask']))
+
+    # add model
+    if (has3d!=0):
+        kicad_mod.append(Model(filename=lib_name + ".3dshapes/"+footprint_name+".wrl", at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
+
+    # print render tree
+    # print(kicad_mod.getRenderTree())
+    # print(kicad_mod.getCompleteRenderTree())
+
+    # write file
+    file_handler = KicadFileHandler(kicad_mod)
+    file_handler.writeFile(footprint_name+'.kicad_mod')
+
+
+
+#                                   _____________
+#                                   | |     * | |rm2
+# power resistor, center+45° wires, | |  * rm1| |
+#                                   |_|_______|_|
+def makeRES_VERT_45DegWIRES(rm1, rm2, rl, rw, rh, ddrill, material, R_POW, x_3d=[0,0,0], s_3d=[1/2.54,1/2.54,1/2.54], has3d=1, specialfpname="", specialtags=[], largepadsx=0, largepadsy=0):
+    rmdisp=roundG(math.sqrt(rm1*rm1+rm2*rm2), 0.01)
+    padx=2*ddrill
+    pady=padx
+    if (largepadsx>0):
+        padx=max(padx, largepadsx)
+    if (largepadsy>0):
+        pady=max(pady, largepadsy)
+    crt_offset=0.25
+    slk_offset=0.15
+    lw_fab=0.1
+    lw_crt=0.05
+    lw_slk=0.15
+    txt_offset=1
+
+    w=rh
+    h=rw
+    left=-w/2
+    top=-h/2
+    h_slk=h+2*slk_offset
+    w_slk=w+2*slk_offset
+    l_slk=left-slk_offset
+    r_slk=l_slk+w_slk
+    t_slk=-h_slk/2
+    yl1_slk=top+(rw-rh)/2
+    yl2_slk=yl1_slk+rh
+    w_crt=w_slk+2*crt_offset
+    h_crt=h_slk+2*crt_offset
+    l_crt=l_slk-crt_offset
+    t_crt=t_slk-crt_offset
+
+
+    lib_name = "Resistors_ThroughHole"
+    description = "Radial, Vertical, 45° pins, RM {0}mm, {1}W, L{2}, W{3}mm, H{4}mm".format(rmdisp, R_POW, rl, rw, rh)
+    tags = "Radial Vertical 45° Pins RM {0}mm {1}W L{2}, W{3}mm, H{4}mm".format(rmdisp, R_POW, rl, rw, rh)
+    if (largepadsx>0 | largepadsx>0):
+        description = description + ", Large Pads"
+        tags = tags + " Large Pads"
+    for t in specialtags:
+        description = description + ", " + t
+        tags = tags + " " + t
+    mat_fn = ""
+    if (material != ""):
+        description = material + ", " + description
+        tags = material + " " + tags
+        mat_fn = "_" + material
+    description = "Resistor, " + description
+    tags = "Resistor R " + tags
+
+
+    if (specialfpname!=""):
+        footprint_name=specialfpname;
+    else:
+        footprint_name = "Resistor{4}_Radial_PinsSymetric_L{1}mm-W{2}mm-H{3}mm-p{0}mm".format(rmdisp, rl, rw, rh,mat_fn)
+    print(footprint_name)
+
+    # init kicad footprint
+    kicad_mod = Footprint(footprint_name)
+    kicad_mod.setDescription(description)
+    kicad_mod.setTags(tags)
+
+    # set general values
+    kicad_mod.append(Text(type='reference', text='REF**', at=[l_slk-txt_offset, 0], rotation=90, layer='F.SilkS'))
+    kicad_mod.append(Text(type='value', text=footprint_name, at=[w_slk/2+txt_offset,0], rotation=90, layer='F.Fab'))
+
+    # create FAB-layer
+    kicad_mod.append(RectLine(start=[left, top], end=[left+w, top+h], layer='F.Fab', width=lw_fab))
+
+    # create SILKSCREEN-layer
+    kicad_mod.append(RectLine(start=[l_slk, t_slk], end=[l_slk+w_slk, t_slk+h_slk], layer='F.SilkS'))
+    if (rw!=rh):
+        kicad_mod.append(Line(start=[l_slk, yl1_slk], end=[l_slk+w_slk, yl1_slk], layer='F.SilkS'))
+        kicad_mod.append(Line(start=[l_slk, yl2_slk], end=[l_slk+w_slk, yl2_slk], layer='F.SilkS'))
+
+    # create courtyard
+    kicad_mod.append(RectLine(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt+w_crt), roundCrt(t_crt+h_crt)], layer='F.CrtYd', width=lw_crt))
+
+    # create pads
+    kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[0, 0], size=[padx, pady], drill=ddrill, layers=['*.Cu', '*.Mask']))
+    kicad_mod.append(Pad(number=2, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[rm2, rm1], size=[padx, pady], drill=ddrill, layers=['*.Cu', '*.Mask']))
 
     # add model
     if (has3d!=0):
@@ -471,10 +571,13 @@ if __name__ == '__main__':
     makeRES_RECT_HOR(   35.0012,     35,    20,   6.6,   6.6,     1.2,   "Ceramic",     "2",           [0, 0, 0],       [1/2.54,1/2.54,1/2.54],       0,      "Resistor_Cement_Horizontal_Meggitt-SBC-2",                         ["Meggit", "SBC", "SBC-2"])
 
     #                        rm, rmdisp,    rl,    rw,    rh,  ddrill,    material,   R_POW,        x_3d=[0,0,0],  s_3d=[1/2.54,1/2.54,1/2.54], has3d=1,                                         specialfpname="",                                      specialtags=[], largepadsx=0, largepadsy=0
-    makeRES_VERT(             5,      5,  25.5,    14,    10,     1.2,     "Cemen",  "5W 7",          [0, 0, 0],       [1/2.54,1/2.54,1/2.54],       0,                  "Resistor_Cement_Vertical_KOA-BGR-5N-7N",       ["Meggitt","KOA","BSR","BGR","BWR","5N","7N"])
-    makeRES_VERT(             5,      5,  25.5,    14,    10,     1.2,     "Cemen",  "5W 7",          [0, 0, 0],       [1/2.54,1/2.54,1/2.54],       0,        "Resistor_Cement_Vertical_LargePads_KOA-BGR-5N-7N",       ["Meggitt","KOA","BSR","BGR","BWR","5N","7N"],            3)
-    makeRES_VERT(             5,      5,  25.5,    13,     9,     1.2,     "Cemen",     "3",          [0, 0, 0],       [1/2.54,1/2.54,1/2.54],       0,                              "Resistor_Cement_KOA-BGR-3N",            ["Meggitt","KOA","BSR","BGR","BWR","3N"])
-    makeRES_VERT(             5,      5,  25.5,    13,     9,     1.2,     "Cemen",     "3",          [0, 0, 0],       [1/2.54,1/2.54,1/2.54],       0,                    "Resistor_Cement_LargePads_KOA-BGR-3N",            ["Meggitt","KOA","BSR","BGR","BWR","3N"],            3)
+    makeRES_VERT(             5,      5,  25.5,    14,    10,     1.2,    "Cement",  "5W 7",          [0, 0, 0],       [1/2.54,1/2.54,1/2.54],       0,                  "Resistor_Cement_Vertical_KOA-BGR-5N-7N",       ["Meggitt","KOA","BSR","BGR","BWR","5N","7N"])
+    makeRES_VERT(             5,      5,  25.5,    14,    10,     1.2,    "Cement",  "5W 7",          [0, 0, 0],       [1/2.54,1/2.54,1/2.54],       0,        "Resistor_Cement_Vertical_LargePads_KOA-BGR-5N-7N",       ["Meggitt","KOA","BSR","BGR","BWR","5N","7N"],            3)
+    makeRES_VERT(             5,      5,  25.5,    13,     9,     1.2,    "Cement",     "3",          [0, 0, 0],       [1/2.54,1/2.54,1/2.54],       0,                              "Resistor_Cement_KOA-BGR-3N",            ["Meggitt","KOA","BSR","BGR","BWR","3N"])
+    makeRES_VERT(             5,      5,  25.5,    13,     9,     1.2,    "Cement",     "3",          [0, 0, 0],       [1/2.54,1/2.54,1/2.54],       0,                    "Resistor_Cement_LargePads_KOA-BGR-3N",            ["Meggitt","KOA","BSR","BGR","BWR","3N"],            3)
+
+    #                                 rm1,      rm2,     rl,    rw,    rh,  ddrill,    material,   R_POW,        x_3d=[0,0,0],  s_3d=[1/2.54,1/2.54,1/2.54], has3d=1,                                         specialfpname="",                                      specialtags=[], largepadsx=0, largepadsy=0
+    #makeRES_VERT_45DegWIRES(          2.4,      2.3,   25.5,    13,     9,     1.2,    "Cement",     "3",          [0, 0, 0],       [1/2.54,1/2.54,1/2.54],       0,                                                        "",            ["Meggitt","KOA","BSR","BGR","BWR","3N"])
 
     #                          rm, rmdisp,   w,   h, ddrill,   R_POW,        x_3d=[0,0,0],  s_3d=[1/2.54,1/2.54,1/2.54], has3d=1, specialfpname=""
     makeRES_SIMPLERECT_HOR(   7.62,     7, 3.4, 1.7,        1,   "1/8",         [0.5, 0, 0],                   [4, 4, 4 ],       0)
