@@ -299,7 +299,7 @@ def makeRES_SIMPLERECT_VER(rm, rmdisp, l, w, h, ddrill, material, R_POW, x_3d=[0
 
     lib_name = "Resistors_ThroughHole"
     description = "Axial, Vertical, RM {0}mm, {1}W, L{2}, W{3}mm, H{4}mm".format(rm, R_POW, l, w, h)
-    tags = "Axial Vertical RM {0}mm {1}W L{2}, W{3}mm, H{4}mm".format(rm, R_POW, l, w, h)
+    tags = "Axial Vertical RM {0}mm {1}W L{2} W{3}mm H{4}mm".format(rm, R_POW, l, w, h)
     for t in specialtags:
         description=description+", "+t
         tags = tags + " " + t
@@ -399,7 +399,7 @@ def makeRES_VERT(rm, rmdisp, rl, rw, rh, ddrill, material, R_POW, x_3d=[0,0,0], 
 
     lib_name = "Resistors_ThroughHole"
     description = "Radial, Vertical, symmetric pins, RM {0}mm, {1}W, L{2}, W{3}mm, H{4}mm".format(rm, R_POW, rl, rw, rh)
-    tags = "Radial Vertical Symmetric Pins RM {0}mm {1}W L{2}, W{3}mm, H{4}mm".format(rm, R_POW, rl, rw, rh)
+    tags = "Radial Vertical Symmetric Pins RM {0}mm {1}W L{2} W{3}mm H{4}mm".format(rm, R_POW, rl, rw, rh)
     if (largepadsx>0 | largepadsx>0):
         description = description + ", Large Pads"
         tags = tags + " Large Pads"
@@ -498,7 +498,7 @@ def makeRES_VERT_45DegWIRES(rm1, rm2, rl, rw, rh, ddrill, material, R_POW, x_3d=
 
     lib_name = "Resistors_ThroughHole"
     description = "Radial, Vertical, 45° pins, RM {0}mm, {1}W, L{2}, W{3}mm, H{4}mm".format(rmdisp, R_POW, rl, rw, rh)
-    tags = "Radial Vertical 45° Pins RM {0}mm {1}W L{2}, W{3}mm, H{4}mm".format(rmdisp, R_POW, rl, rw, rh)
+    tags = "Radial Vertical 45° Pins RM {0}mm {1}W L{2} W{3}mm H{4}mm".format(rmdisp, R_POW, rl, rw, rh)
     if (largepadsx>0 | largepadsx>0):
         description = description + ", Large Pads"
         tags = tags + " Large Pads"

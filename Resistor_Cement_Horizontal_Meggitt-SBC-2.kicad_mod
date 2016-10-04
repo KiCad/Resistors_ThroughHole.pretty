@@ -1,4 +1,4 @@
-(module Resistor_Cement_Horizontal_Meggitt-SBC-2 (layer F.Cu) (tedit 57F36CBC)
+(module Resistor_Cement_Horizontal_Meggitt-SBC-2 (layer F.Cu) (tedit 57F3756E)
   (descr "Resistor, Ceramic, Axial, Horizontal, RM 35.0012mm, 2W, L 20mm, W6.6mm, H6.6mm, Meggit, SBC, SBC-2")
   (tags "Resistor R Ceramic Axial Horizontal RM 35.0012mm 2W L 20mm W6.6mm H6.6mm Meggit SBC SBC-2")
   (fp_text reference REF** (at 17.5006 -4.45) (layer F.SilkS)

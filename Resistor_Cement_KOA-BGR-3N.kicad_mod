@@ -1,6 +1,6 @@
-(module Resistor_Cement_KOA-BGR-3N (layer F.Cu) (tedit 57F3712D)
+(module Resistor_Cement_KOA-BGR-3N (layer F.Cu) (tedit 57F3756E)
   (descr "Resistor, Cement, Radial, Vertical, symmetric pins, RM 5mm, 3W, L25.5, W13mm, H9mm, Meggitt, KOA, BSR, BGR, BWR, 3N")
-  (tags "Resistor R Cement Radial Vertical Symmetric Pins RM 5mm 3W L25.5, W13mm, H9mm Meggitt KOA BSR BGR BWR 3N")
+  (tags "Resistor R Cement Radial Vertical Symmetric Pins RM 5mm 3W L25.5 W13mm H9mm Meggitt KOA BSR BGR BWR 3N")
   (fp_text reference REF** (at 2.5 -5.65) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
