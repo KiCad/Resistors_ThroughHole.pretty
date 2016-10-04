@@ -1,4 +1,4 @@
-(module Resistor_Horizontal_RM25mm (layer F.Cu) (tedit 57F36765)
+(module Resistor_Horizontal_RM25mm (layer F.Cu) (tedit 57F36CBC)
   (descr "Resistor, Axial, Horizontal, RM 25mm, 3W, L*D 17*6mm²")
   (tags "Resistor Axial Horizontal RM 25mm 3W L*D 17*6mm²")
   (fp_text reference REF** (at 12.5 -4.15) (layer F.SilkS)

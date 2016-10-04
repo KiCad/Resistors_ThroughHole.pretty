@@ -1,4 +1,4 @@
-(module Resistor_Horizontal_RM7mm (layer F.Cu) (tedit 57F36765)
+(module Resistor_Horizontal_RM7mm (layer F.Cu) (tedit 57F36CBC)
   (descr "Resistor, Axial, Horizontal, RM 7.62mm, 1/8W, L*D 3.4*1.7mm²")
   (tags "Resistor Axial Horizontal RM 7.62mm 1/8W L*D 3.4*1.7mm²")
   (fp_text reference REF** (at 3.81 -2) (layer F.SilkS)

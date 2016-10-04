@@ -1,4 +1,4 @@
-(module Resistor_Vertical_RM7.5mm (layer F.Cu) (tedit 57F36765)
+(module Resistor_Vertical_RM7.5mm (layer F.Cu) (tedit 57F36CBC)
   (descr "Resistor, Axial, Vertical, RM 7.5mm, 5W, L*D 24*10mm²")
   (tags "Resistor Axial Vertical RM 7.5mm 5W L*D 24*10mm²")
   (fp_text reference REF** (at 3.75 -6.15) (layer F.SilkS)
